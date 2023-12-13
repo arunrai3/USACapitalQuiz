@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import styles from './select_quiz.module.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 function SelectQuiz() {
     const [selectedQuiz, setSelectedQuiz] = useState('');
     const [quizType, setQuizType] = useState('multipleChoice'); 
+    const navigate = useNavigate();
     const customStyle = {
         backgroundColor: 'blue',
         color: 'white',
       };
+
 
 
 return (
@@ -23,9 +27,10 @@ return (
           onChange={(e) => setSelectedQuiz(e.target.value)}
         >
           <option value="">Select a Quiz</option>
-          <option value="quiz1">Quiz 1</option>
-          <option value="quiz2">Quiz 2</option>
-          {/* Add more quiz options here */}
+          <option value="quiz1">Capitals for all the States in USA</option>
+          <option value="quiz2">Capitals for all the Countries in the World</option>
+          <option value="quiz3">States for all Capitals in USA</option>
+          <option value="quiz4">Countries for all Capitals in the World</option>
         </select>
       </div>
       <div className="quiz-type">
@@ -52,11 +57,14 @@ return (
         </label>
       </div>
       <button
-        className="btn btn-primary"
+        className="start-quiz-button"
         style = {customStyle}
         disabled={!selectedQuiz}
         onClick={() => {
-          // Handle quiz start here
+          navigate('/quiz', {
+            selectedQuiz: selectedQuiz, 
+            quizType: quizType, 
+          });
         }}
       >
         Start Quiz
