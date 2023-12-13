@@ -44,29 +44,6 @@ public class Final2 {
      }	    
     }
 
-    void EnterStateCapital(String[][] quizlist, Scanner inputscan) {
-    double correct = 0.00;
-    double totalscore = 0.00;
-    System.out.println("------------------------------------------------------------------------------------------------------------------");
-    System.out.println("STARTING QUIZ, ENTER CORRESPONDING CAPITAL FOR EACH STATE. RESULTS WILL BE SHOWN AFTER ALL QUESTIONS ARE ANSWERED.");
-    System.out.println("quiz is not case sensitive.");
-    System.out.println("------------------------------------------------------------------------------------------------------------------");
-    for(int i=0;i<50;i++) {
-      System.out.println("What is the capital of " + quizlist[i][0] + "?");
-      String state = inputscan.nextLine();
-      if (state.toLowerCase().equals(quizlist[i][1].toLowerCase())) {
-       correct = correct + 1.00;
-      }
-        if (i == 49) {
-    	 totalscore = correct / 50.00;
-    	 totalscore = totalscore * 100.00;
-
-    	 System.out.println("----------------------------------------------------------------");
-    	 System.out.println("You answered " + correct + " out of the 50 questions correct. Which is " + totalscore + "%.");
-    	 System.out.println("----------------------------------------------------------------");
-      }
-     }
-    }
 
     void hashMap(String[][] hashlist, Scanner inputscan) {
     Map<String, String> newmap = new HashMap<String, String>();     	
@@ -137,12 +114,7 @@ public class Final2 {
     
     //Print the array that we sorted
     quiz.printMyArray(mainlist);
-    
-    
-    //Now we will take the quiz
-    String[][] quizlist = setArray();
-    quiz.EnterStateCapital(quizlist, scanner);
-    
+        
     
     //Now we want to store our array into a Hashmap
     String[][] hashlist = setArray();
@@ -345,5 +317,3 @@ class TreeStorage2 {
 		printInOrder(node.rightChild);
 	 }
     }
-
-
