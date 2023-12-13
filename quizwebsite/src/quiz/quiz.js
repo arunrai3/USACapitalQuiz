@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from './quiz.module.css';
+import { useLocation } from 'react-router-dom';
 
 function Quiz(props) {
-  const { selectedQuiz, quizType } = props;
+  const location = useLocation();
+  const { selectedQuiz, quizType } = location.state;
   const [currentQuestion, setCurrentQuestion] = useState(1);
 
   const questions = [
@@ -16,7 +18,6 @@ function Quiz(props) {
       options: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
       answer: 'London',
     },
-    // Add more questions as needed
   ];
 
   const currentQuestionData = questions[currentQuestion - 1];
@@ -25,7 +26,6 @@ function Quiz(props) {
     <div className={styles['quiz-container']}>
       <h2>Question {currentQuestion}</h2>
       <p>{currentQuestionData.question}</p>
-      {/* Render multiple choice or text input based on user selection */}
       {quizType === 'multipleChoice' ? (
         <div>
           {currentQuestionData.options.map((option, index) => (

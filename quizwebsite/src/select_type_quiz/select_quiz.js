@@ -61,10 +61,7 @@ return (
         style = {customStyle}
         disabled={!selectedQuiz}
         onClick={() => {
-          navigate('/quiz', {
-            selectedQuiz: selectedQuiz, 
-            quizType: quizType, 
-          });
+          navigate('/quiz', { state: { selectedQuiz, quizType } });
         }}
       >
         Start Quiz
