@@ -4,4 +4,6 @@
 bin/
 requirements.txt
 .vscode
-.java_connect_db/pom.xml
+java_connect_db/pom.xml
+java_connect_db/target/
+java_connect_db/src/test/
