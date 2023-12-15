@@ -4,6 +4,13 @@
 bin/
 requirements.txt
 .vscode
-java_connect_db/pom.xml
-java_connect_db/target/
-java_connect_db/src/test/
+serverlogic/pom.xml
+serverlogic/HELP.md
+serverlogic/mvnw
+serverlogic/mvnw.cmd
+serverlogic/.mvn/wrapper/
+
+serverlogic/target/
+serverlogic/src/test/
+serverlogic/keys/realupass.txt
+serverlogic/src/main/resources/

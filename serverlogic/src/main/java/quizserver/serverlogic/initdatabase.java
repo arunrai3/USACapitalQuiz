@@ -1,4 +1,4 @@
-package arun;
+package quizserver.serverlogic;
 
 
 import java.io.BufferedReader;
@@ -19,15 +19,24 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 
-public class App 
+public class initdatabase 
 {
-    public static void main(String[] args) {
 
-        String rootFolder = System.getProperty("user.dir");
-        String keypath = rootFolder + "\\java_connect_db\\keys\\upass.txt";
+    private String rootFolder;
+    private String keyPath;
+
+    public initdatabase() {
+        this.rootFolder = System.getProperty("user.dir");
+        this.keyPath = rootFolder + "\\serverlogic\\keys\\upass.txt";
+    }
+
+    public void initializeDatabase() {
+
+
+
         String connectionStringTemplate = "mongodb+srv://<username>:<password>@quizcluster.k7jsdq7.mongodb.net/?retryWrites=true&w=majority";
 
-        String connectionString = getConnectionString(connectionStringTemplate, keypath);
+        String connectionString = getConnectionString(connectionStringTemplate, keyPath);
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
