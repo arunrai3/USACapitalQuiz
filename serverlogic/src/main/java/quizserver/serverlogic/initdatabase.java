@@ -27,7 +27,7 @@ public class initdatabase
 
     public initdatabase() {
         this.rootFolder = System.getProperty("user.dir");
-        this.keyPath = rootFolder + "\\serverlogic\\keys\\upass.txt";
+        this.keyPath = rootFolder + "\\serverlogic\\keys\\realupass.txt";
     }
 
     public void initializeDatabase() {

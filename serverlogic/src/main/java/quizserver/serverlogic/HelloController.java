@@ -1,5 +1,6 @@
 package quizserver.serverlogic;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class HelloController {
     @Autowired
     private MongoClient mongoClient;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/hello")
     public String hello() {
         MongoDatabase database = mongoClient.getDatabase("QuizzesAnswers");
@@ -24,10 +26,20 @@ public class HelloController {
 
         FindIterable<Document> iterable = collection.find().limit(60); 
 
-        StringBuilder sb = new StringBuilder();
+        // Start of JSON array
+        StringBuilder sb = new StringBuilder("[");
+        
+        boolean first = true;
         for (Document doc : iterable) {
-            sb.append(doc.toJson()).append("\n");
+            if (!first) {
+                sb.append(","); 
+            }
+            sb.append(doc.toJson());
+            first = false;
         }
+
+        // End of JSON array
+        sb.append("]");
 
         return sb.toString();
     }

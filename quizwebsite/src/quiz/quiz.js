@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './quiz.module.css';
 import { useLocation } from 'react-router-dom';
 
 function Quiz(props) {
   const location = useLocation();
   const { selectedQuiz, quizType } = location.state;
+  const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(1);
 
-  const questions = [
-    {
-      question: 'What is the capital of France?',
-      options: ['Paris', 'London', 'Berlin', 'Madrid'],
-      answer: 'Paris',
-    },
-    {
-      question: 'What is the capital of England?',
-      options: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
-      answer: 'London',
-    },
-  ];
+  useEffect(() => {
+    fetch('http://localhost:8080/hello')    
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); 
+        const formattedQuestions = data.map(item => ({
+          question: `What is the capital of ${item.state}?`,
+          options: generateRandomOptions(item.capital), 
+          answer: item.capital,
+        }));
+        setQuestions(formattedQuestions);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   const currentQuestionData = questions[currentQuestion - 1];
+  
+  if (!currentQuestionData) {
+    return <div>Loading quiz data...</div>;
+  }
 
   return (
     <div className={styles['quiz-container']}>
@@ -51,3 +58,8 @@ function Quiz(props) {
 }
 
 export default Quiz;
+
+function generateRandomOptions(correctAnswer) {
+ 
+  return [correctAnswer, 'Option 2', 'Option 3', 'Option 4'];
+}
