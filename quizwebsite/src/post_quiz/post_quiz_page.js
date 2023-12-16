@@ -17,6 +17,7 @@ function PostQuizPage() {
         <button onClick={() => {}}>View Stats</button>
         <button onClick={() => {}}>Review Quiz</button>
         <button onClick={() => {}}>Leaderboard Page</button>
+        <button onClick={() => {}}>Study Page</button>
       </div>
     </div>
   );
