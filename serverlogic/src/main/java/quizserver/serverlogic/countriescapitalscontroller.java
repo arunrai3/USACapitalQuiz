@@ -24,7 +24,7 @@ public class countriescapitalscontroller {
         MongoDatabase database = mongoClient.getDatabase("QuizzesAnswers");
         MongoCollection<Document> collection = database.getCollection("CountriesCapitals");
 
-        FindIterable<Document> iterable = collection.find().limit(60); 
+        FindIterable<Document> iterable = collection.find().limit(200); 
 
         StringBuilder sb = new StringBuilder("[");
         
