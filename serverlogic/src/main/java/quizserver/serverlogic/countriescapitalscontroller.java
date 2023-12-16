@@ -13,20 +13,19 @@ import org.bson.Document;
 
 
 @RestController
-public class HelloController {
+public class countriescapitalscontroller {
 
     @Autowired
     private MongoClient mongoClient;
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping("/hello")
-    public String hello() {
+    @RequestMapping("/countriesandcapitals")
+    public String getCountryCapitalData() {
         MongoDatabase database = mongoClient.getDatabase("QuizzesAnswers");
-        MongoCollection<Document> collection = database.getCollection("StateCapitals");
+        MongoCollection<Document> collection = database.getCollection("CountriesCapitals");
 
         FindIterable<Document> iterable = collection.find().limit(60); 
 
-        // Start of JSON array
         StringBuilder sb = new StringBuilder("[");
         
         boolean first = true;
@@ -38,7 +37,6 @@ public class HelloController {
             first = false;
         }
 
-        // End of JSON array
         sb.append("]");
 
         return sb.toString();
