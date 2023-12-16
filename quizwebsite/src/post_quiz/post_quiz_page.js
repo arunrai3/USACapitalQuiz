@@ -18,10 +18,22 @@ function PostQuizPage() {
 
       <div className="button-group">
         <button onClick={() => {}}>View Stats</button>
-        <button onClick={() => {}}>Review Quiz</button>
         <button onClick={() => {}}>Leaderboard Page</button>
         <button onClick={() => {}}>Study Page</button>
       </div>
+
+      <div className={styles['question-review-section']}>
+        {questions.map((question, index) => (
+          <div key={index} className={styles['question-item']}>
+            <p><strong>Q{index + 1}: {question.question}</strong></p>
+            <p style={{ color: 'green' }}>Correct Answer: {question.answer}</p>
+            <p style={{ color: userAnswers[index] === question.answer ? 'green' : 'red' }}>
+              Your Answer: {userAnswers[index] || 'No Answer'}
+            </p>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 }
