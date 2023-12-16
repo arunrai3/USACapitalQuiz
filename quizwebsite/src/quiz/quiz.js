@@ -46,7 +46,12 @@ function Quiz(props) {
     }, [selectedQuiz]);
 
   const currentQuestionData = questions[currentQuestion - 1];
-
+  
+  const handleTextChange = (e) => {
+    const newAnswers = [...userAnswers];
+    newAnswers[currentQuestion - 1] = e.target.value;
+    setUserAnswers(newAnswers);
+  };
   
   const handleOptionChange = (e) => {
     setSelectedAnswer(e.target.value);
@@ -87,7 +92,7 @@ function Quiz(props) {
           ))}
         </div>
       ) : (
-        <textarea rows="4" cols="50" placeholder="Your answer here"></textarea>
+        <textarea rows="4" cols="50" placeholder="Your answer here" value={userAnswers[currentQuestion - 1] || ''} onChange={handleTextChange} ></textarea>
       )}
       <div className="button-container">
         {currentQuestion > 1 && (
