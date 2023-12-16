@@ -11,26 +11,39 @@ function Quiz(props) {
   const [userAnswers, setUserAnswers] = useState([]);
 
   useEffect(() => {
-    let allCapitals = []; 
-  
-    fetch('http://localhost:8080/hello')    
+
+    let apiUrl;
+    if (selectedQuiz === "quiz1" || selectedQuiz === "quiz3") {
+      apiUrl = 'http://localhost:8080/statesandcapitals';
+    } else if (selectedQuiz === "quiz2" || selectedQuiz === "quiz4") {
+      apiUrl = 'http://localhost:8080/countriesandcapitals';
+    } else {
+      console.error('Invalid selectedQuiz value:', selectedQuiz);
+      return;
+    }
+
+    fetch(apiUrl)    
       .then(response => response.json())
       .then(data => {
-        allCapitals = data.map(item => item.capital); 
-        console.log(data); 
-        const formattedQuestions = data.map(item => {
-          const options = generateRandomOptions(item.capital, allCapitals);
-          return {
-            question: `What is the capital of ${item.state}?`,
-            options: shuffleArray(options),
-            answer: item.capital,
-          };
-        });
+        
+        let formattedQuestions;
+
+        if (selectedQuiz === "quiz1" || selectedQuiz === "quiz2") {
+          formattedQuestions = formatQuestions(data, selectedQuiz === "quiz1" ? 'state' : 'country', 'capital', selectedQuiz);
+        } else if (selectedQuiz === "quiz3") {
+          formattedQuestions = formatQuestions(data, 'capital', 'state', selectedQuiz);
+        } else if (selectedQuiz === "quiz4") {
+          formattedQuestions = formatQuestions(data, 'capital', 'country', selectedQuiz);
+        } else {
+          console.error('Invalid selectedQuiz value:', selectedQuiz);
+          return;
+        }
         setQuestions(formattedQuestions);
         setUserAnswers(new Array(data.length).fill(''));
       })
       .catch(error => console.error('Error fetching data:', error));
-  }, []);
+
+    }, [selectedQuiz]);
 
   const currentQuestionData = questions[currentQuestion - 1];
 
@@ -108,4 +121,27 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+}
+
+function formatQuestions(data, questionProperty, answerProperty, quizType) {
+  const allAnswers = data.map(item => item[answerProperty]);
+  const formattedQuestions = data.map(item => {
+    const options = generateRandomOptions(item[answerProperty], allAnswers);
+    let questionString = "";
+    
+    if (quizType === "quiz1" || quizType === "quiz2") {
+      questionString = `What is the capital of ${item[questionProperty]}?`
+    } else if (quizType === "quiz3") {
+      questionString = `Which state is ${item[questionProperty]} the capital of?`
+    } else if (quizType === "quiz4") {
+      questionString = `Which country is ${item[questionProperty]} the capital of?`
+    }
+
+    return {
+      question: questionString,
+      options: shuffleArray(options),
+      answer: item[answerProperty],
+    };
+  });
+  return formattedQuestions;
 }
