@@ -27,7 +27,6 @@ function Quiz(props) {
           };
         });
         setQuestions(formattedQuestions);
-        setSelectedAnswer('');
         setUserAnswers(new Array(data.length).fill(''));
       })
       .catch(error => console.error('Error fetching data:', error));
@@ -45,11 +44,12 @@ function Quiz(props) {
 
   const handleNextQuestion = () => {
     setCurrentQuestion(currentQuestion + 1);
-    setSelectedAnswer('');
+    setSelectedAnswer(userAnswers[currentQuestion]);
   };
 
   const handlePreviousQuestion = () => {
     setCurrentQuestion(currentQuestion - 1);
+    setSelectedAnswer(userAnswers[currentQuestion - 2]);
   };
 
   
