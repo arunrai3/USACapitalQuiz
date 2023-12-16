@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './quiz.module.css';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Quiz(props) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { selectedQuiz, quizType } = location.state;
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -98,8 +100,14 @@ function Quiz(props) {
         {currentQuestion > 1 && (
           <button onClick={handlePreviousQuestion}>Previous</button>
         )}
-        {currentQuestion < questions.length && (
+        {currentQuestion < questions.length ? (
           <button onClick={handleNextQuestion}>Next</button>
+        ) : (
+          <button         
+            onClick={() => {
+              navigate('/postquizpage', { state: { selectedQuiz, quizType } });
+            }}
+          >Submit</button>
         )}
       </div>
     </div>
@@ -130,7 +138,7 @@ function shuffleArray(array) {
 
 function formatQuestions(data, questionProperty, answerProperty, quizType) {
   const allAnswers = data.map(item => item[answerProperty]);
-  const formattedQuestions = data.map(item => {
+  let formattedQuestions = data.map(item => {
     const options = generateRandomOptions(item[answerProperty], allAnswers);
     let questionString = "";
     
@@ -148,5 +156,8 @@ function formatQuestions(data, questionProperty, answerProperty, quizType) {
       answer: item[answerProperty],
     };
   });
+
+  formattedQuestions = shuffleArray(formattedQuestions);
+
   return formattedQuestions;
 }
