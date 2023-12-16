@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from './post_quiz_page.module.css';
+import { useLocation } from 'react-router-dom';
 
 function PostQuizPage() {
-  
-  const score = 8; 
-  const totalQuestions = 10;
-  const percentage = (score / totalQuestions) * 100;
+
+  const location = useLocation();
+  const { selectedQuiz, quizType, userAnswers, questions } = location.state;
+
+  const { score, totalQuestions, percentage } = calculateScore(userAnswers, questions);
+
 
   return (
     <div className={styles['post-quiz-container']}>
@@ -24,3 +27,22 @@ function PostQuizPage() {
 }
 
 export default PostQuizPage;
+
+function calculateScore(userAnswers, questions) {
+    let score = 0;
+    
+    userAnswers.forEach((answer, index) => {
+      if (answer.trim().toLowerCase() === questions[index].answer.trim().toLowerCase()) {
+        score++;
+      }
+    });
+  
+    const totalQuestions = questions.length;
+    const percentage = (score / totalQuestions) * 100;
+  
+    return {
+      score,
+      totalQuestions,
+      percentage
+    };
+  }

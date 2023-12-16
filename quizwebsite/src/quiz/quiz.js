@@ -72,7 +72,11 @@ function Quiz(props) {
     setSelectedAnswer(userAnswers[currentQuestion - 2]);
   };
 
-  
+  const handleSubmit = () => {
+    navigate('/postquizpage', { state: { selectedQuiz, quizType, userAnswers, questions } });
+    console.log(userAnswers);
+  };
+
   if (!currentQuestionData) {
     return <div>Loading quiz data...</div>;
   }
@@ -103,11 +107,7 @@ function Quiz(props) {
         {currentQuestion < questions.length ? (
           <button onClick={handleNextQuestion}>Next</button>
         ) : (
-          <button         
-            onClick={() => {
-              navigate('/postquizpage', { state: { selectedQuiz, quizType } });
-            }}
-          >Submit</button>
+          <button onClick={handleSubmit}>Submit</button>
         )}
       </div>
     </div>
