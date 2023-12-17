@@ -10,7 +10,7 @@ function Navbar() {
 
         <div className={styles.spacer}></div>
 
-        <button className={styles.loginButton}>Login/Sign Up</button>
+        <Link to="/createaccount" className={styles.loginButton}>Login/Sign Up</Link>
       </div>
     </nav>
   );
