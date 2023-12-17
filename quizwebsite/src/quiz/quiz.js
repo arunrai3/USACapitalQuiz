@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './quiz.module.css';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import QuitQuizPopup from '../popups/quit_quiz';
+
 
 function Quiz(props) {
   const location = useLocation();
@@ -11,6 +13,7 @@ function Quiz(props) {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [userAnswers, setUserAnswers] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
 
@@ -72,6 +75,18 @@ function Quiz(props) {
     setSelectedAnswer(userAnswers[currentQuestion - 2]);
   };
 
+  const handleQuitClick = () => {
+    setShowPopup(true);
+  };
+
+  const handleConfirmQuit = () => {
+    setShowPopup(false);
+  };
+
+  const handleCancelQuit = () => {
+    setShowPopup(false);
+  };  
+
   const handleSubmit = () => {
     navigate('/postquizpage', { state: { selectedQuiz, quizType, userAnswers, questions } });
     console.log(userAnswers);
@@ -109,6 +124,14 @@ function Quiz(props) {
         ) : (
           <button onClick={handleSubmit}>Submit</button>
         )}
+        <button onClick={handleQuitClick}>Quit</button>
+        {showPopup && (
+        <QuitQuizPopup 
+          message="Are you sure you want to quit the quiz? Your work will not be saved." 
+          onConfirm={handleConfirmQuit} 
+          onCancel={handleCancelQuit} 
+        />
+        )}        
       </div>
     </div>
   );
