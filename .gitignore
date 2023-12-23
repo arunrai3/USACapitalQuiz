@@ -14,3 +14,4 @@ serverlogic/target/
 serverlogic/src/test/
 serverlogic/keys/realupass.txt
 serverlogic/src/main/resources/
+serverlogic/src/main/java/quizserver/serverlogic/MongoConfig.java
