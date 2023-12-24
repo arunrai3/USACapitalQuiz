@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 
 @RestController
-public class registerusercontroller {
+public class LoginController {
 
     @Autowired
     private MongoClient mongoClient;
